@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/globals.js"></script>   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style/style.css">
+    <title>Crypto Dashboard</title>
+</head>
+<body>
+
+<!-- As a heading -->
+<nav class="navbar" id="header">
+  <div class="container-fluid">
+    <span class="navbar-brand">Crypto dashboard v 1.0</span>
+    <a class="navbar-brand float-end " href="#">
+      <img src="assets/img/logo1.bmp" alt="Logo" width="50" height="50" id="logo">
+    </a>
+  </div>
+</nav>
+
+  <div class="container">
+    <!-- Page Navbar -->
+    <nav class="navbar sticky-top navbar-expand-sm" id="navbar">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link">Live Reports</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link">About</a>
+              </li>
+            </ul>
+            <form class="d-sm-block" role="search">
+              <input class="form-control me-2" id="search" type="search" placeholder="Search">
+              <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+            </form>
+          </div>
+        </div>
+    </nav>
+    
+    <!-- Page dynamic content -->
+    <div id="root">
+
+    </div>
+      
+  </div>
+
+  <div class="modal" id="modal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-fullscreen-sm-down">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">YoU have reached the limit of 5 currencies in chart graph - please deselect the following to include your last choise:</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="modalContent" class="container">
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="updateOnModalSave(this)">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/index.js"></script>
+  <script src="assets/chart.js"></script> 
+
+</body>
+</html>
