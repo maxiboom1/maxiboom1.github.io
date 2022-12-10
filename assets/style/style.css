@@ -24,9 +24,11 @@ margin-left: 20px;
 }
 
 #menu-navbar{
+    font-size: 18px;
     margin-bottom: 50px;
     font-family: acme;
-    background-color: blueviolet;
+    background-color: rgba(137, 43, 226, 0.943);
+    border-radius: 0px 0px 15px 15px;
 }
 
 .nav-link{
@@ -50,4 +52,7 @@ div[class="card-body text-dark"] img{
 width: 25px;
 height: 30px;
 margin-right: 10px;
+}
+#comingSoonIcon{
+    margin-top: -110px;
 }

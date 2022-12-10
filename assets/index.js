@@ -211,6 +211,7 @@ function changeAppContent(){
   
   } else {
     console.log('Go to about me');
+    render('#root', _COMING_SOON);
   }
 }
 
