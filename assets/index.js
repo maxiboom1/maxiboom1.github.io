@@ -1,5 +1,4 @@
 const myModal = new bootstrap.Modal(document.getElementById('modal'), {keyboard: false, backdrop: 'static'});
-const noticeModal = new bootstrap.Modal(document.getElementById('noticeNoSelectionModal'), {keyboard: false, backdrop: 'static'});
 const toast = new bootstrap.Toast(document.getElementById('liveToast'));
 
 let coinsLocaleCopy = [];
@@ -231,7 +230,8 @@ function changeAppContent(){
   
   } else {
     console.log('Go to about me');
-    render('#root', _COMING_SOON);
+    //render('#root', _COMING_SOON);
+    render('#root',_ABOUT)
     disableSearch();
   }
 }
