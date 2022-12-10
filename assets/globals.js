@@ -27,6 +27,10 @@ const _COMING_SOON = `<main class="container">
   </svg>
 
 </div>
+<br>
+<br>
+<h3 style='color:white'>Project description</h3> 
+<iframe src="reference/27874 - Project Jquery AJAX - Crypto API.pdf" width="100%" height="830px">
 </main>`
 
 // ========================================= DEBOUNCER ========================================= \\
@@ -48,3 +52,4 @@ const debounce = (func, wait) => {
     timeout = setTimeout(later, wait);
   };
 };
+

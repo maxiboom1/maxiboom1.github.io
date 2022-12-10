@@ -1,5 +1,6 @@
 const myModal = new bootstrap.Modal(document.getElementById('modal'), {keyboard: false, backdrop: 'static'});
 const noticeModal = new bootstrap.Modal(document.getElementById('noticeNoSelectionModal'), {keyboard: false, backdrop: 'static'});
+const toast = new bootstrap.Toast(document.getElementById('liveToast'));
 
 let coinsLocaleCopy = [];
 let chartlist = [];
@@ -191,32 +192,46 @@ function resetChartlist(){
   chartlist.length = 0;
 }
 
+async function fetchData(url){
+	const res = await fetch(url);
+	const data = await res.json();
+	return data;
+}
+
+function disableSearch(action = "disable"){
+  if (action == 'enable'){
+    $('#search').removeAttr("disabled"); 
+  } else {
+    $('#search').attr('disabled', 'disabled');
+  }
+}
+
 function changeAppContent(){
+  
   const page = $(this)[0].outerText;
   
   if(page == "Home"){
     showHomePage();
     resetChartlist();
-    clearInterval(localStorage.getItem('interval')); // cancel canvasJS fetch loop 
-  } 
+    clearInterval(localStorage.getItem('interval')); // cancel canvasJS fetch loop
+    disableSearch('enable');
+    } 
     
     else if(page =="Live Reports"){
     if(chartlist.length){
       $('#root').html('').append(_SPINNER); // insert spinner
       buildChartData();
+      disableSearch();
+      
     } else {
-      noticeModal.show();
+      //noticeModal.show();
+      toast.show()
     }
 
   
   } else {
     console.log('Go to about me');
     render('#root', _COMING_SOON);
+    disableSearch();
   }
-}
-
-async function fetchData(url){
-	const res = await fetch(url);
-	const data = await res.json();
-	return data;
 }
