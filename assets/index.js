@@ -242,5 +242,9 @@ function changeAppContent(){
 }
 
 function closeMenu(){
-  setTimeout(()=>{$('.navbar-toggler').click();},250);
+  
+  if(window.innerWidth <576){
+    setTimeout(()=>{$('.navbar-toggler').click();},250);
+  }
+  
 }
