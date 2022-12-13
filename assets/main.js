@@ -1,10 +1,14 @@
 const myModal = new bootstrap.Modal(document.getElementById('modal'), {keyboard: false, backdrop: 'static'});
 const toast = new bootstrap.Toast(document.getElementById('liveToast'));
-
-let coinsLocaleCopy = [];
+let coinsLocaleCopy = []; // 100 items copy 
 let chartlist = [];
-$('.nav-item').click(changeAppContent);
 
+
+$('#search').on('keyup focusout change', search);
+$('.nav-item').click(changeAppContent);
+$("#root" ).on("change", "input[role='switch']", function() {
+  handleAddToChartlist($(this)); 
+});
 $("#root" ).on("click", ".collapseBtn", function() { // adds click events to each .collapseBtn in root div, and toggles collapse.
   createCoinInfo( $(this).next() );
 }); 
@@ -79,34 +83,9 @@ function render(container, element){
 
 }
 
-const search = debounce(function() { 
-  const filteredArr = [];
-  const searchValue = $('#search').val().toLowerCase(); // search input
-  
-  for(const coin of coinsLocaleCopy){
-    
-    const coinName = coin.name.toLowerCase();
-    const coinSymbol = coin.symbol.toLowerCase();
-
-    if (coinName.startsWith(searchValue) || coinSymbol.startsWith(searchValue)){
-      filteredArr.push(coin);
-    }
-  }
-
-  let searchResult = renderCoinList(filteredArr,createCard);
-  if(filteredArr.length == 0){searchResult = _SEARCHFAIL;} // If no search result - print msg
-  render('#root', searchResult);
-  renderChartlistOnDOM();
-}, 500);
-$('#search').on('keyup focusout change', search);
-
 // 5-selector logics
 
-$("#root" ).on("change", "input[role='switch']", function() {
-  handleAddToChartlist($(this)); 
-});
-
-function handleAddToChartlist(toggler){  
+function handleAddToChartlist(toggler){ 
   const selectedId = toggler.attr("coin-id");
   const isChecked = toggler.prop("checked");
   const thumbnail = coinsLocaleCopy.find((coin)=>{return coin.id == selectedId}).image;
@@ -131,56 +110,6 @@ function handleAddToChartlist(toggler){
   }
 }
 
-function createModalCard(coin){
-  const modalCard = `
-  <div class="col-xs-6 col-sm-6 col-md-4 col-xl-3">
-    <div class="card border-dark mb-3 mx-auto" style="max-width: 18rem;">
-      <div class="card-body">
-        <img class="float-end" style="width:50px" src="${coin.thumbnail}" alt="image">
-        <span>${coin.symbol.toUpperCase()}</span>
-        <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" coin-symbol="${coin.symbol}_" coin-id="${coin.id}_" role="switch" checked>
-        </div>
-      </div>
-    </div>
-  </div>
-`;
-
-  return modalCard;
-
-}
-// on user 'save' in modal dialog =>
-function updateOnModalSave(el){ 
-  
-  const itemsToInclude = $(el).parent().prev().find('input:checked'); //list of togglers
-  const itemsToExclude = $(el).parent().prev().find('input:not(:checked)'); //list of togglers
-  resetChartlist(); //reset chart list
-  // clear excluded togglers from DOM
-  for(const item of itemsToExclude){
-    const id = $(item).attr('coin-id').slice(0,-1);
-    $(`input[coin-id="${id}"]`).prop("checked",false);
-  }
-  for(const item of itemsToInclude){ // Create 
-    const id = $(item).attr('coin-id').slice(0,-1);   
-    chartlist.push({
-      id:id, 
-      symbol:$(item).attr('coin-symbol').slice(0,-1), 
-      thumbnail:$(item).parent().parent().find('img').attr('src')
-    });
-    $(`input[coin-id="${id}"]`).prop("checked",true);
-  }
-  
-  if(chartlist.length < 5){
-
-    chartlist.push(JSON.parse(localStorage.getItem('tempId')));
-    const id = chartlist[chartlist.length-1].id;
-    $(`input[coin-id="${id}"]`).prop("checked",true);  
-  }
-
-  myModal.hide();
-
-}
-
 function renderChartlistOnDOM(){
   for(const item of chartlist){ 
     $(`input[coin-id="${item.id}"]`).prop("checked",true);
@@ -195,14 +124,6 @@ async function fetchData(url){
 	const res = await fetch(url);
 	const data = await res.json();
 	return data;
-}
-
-function disableSearch(action = "disable"){
-  if (action == 'enable'){
-    $('#search').removeAttr("disabled"); 
-  } else {
-    $('#search').attr('disabled', 'disabled');
-  }
 }
 
 function changeAppContent(){
@@ -246,3 +167,4 @@ function closeMenu(){
   }
   
 }
+

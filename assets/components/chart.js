@@ -1,8 +1,8 @@
 async function buildChartData(){
     const url = getFetchURL();
-   const data = await fetchData(url);
-   const datapoints = createCanvasData(data);
-   renderChart(datapoints,url);
+    const data = await fetchData(url);
+    const datapoints = createCanvasData(data);
+    renderChart(datapoints,url);
 }
 
 function getFetchURL(){
@@ -35,8 +35,7 @@ function createCanvasData(data){
    }
    
    return arr;
-       
-   
+     
 }
 
 function renderChart(datapoints,url){
